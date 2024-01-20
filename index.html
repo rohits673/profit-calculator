@@ -211,6 +211,30 @@
                 
             }
 
+
+        .reset-button {
+            position: relative;
+            bottom: 0;
+            background-color: #28E6FE;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 45px;
+        }
+
+        .reset-button:hover {
+            background-color: #28E6FE;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
             #outputDate{
                 letter-spacing: 1px;
                 color: #818181;
@@ -256,13 +280,9 @@
 
            #outputCurrentPrice{
             color: white;
-            padding-left: 30px;
+            padding-left: 35px;
            }
-           .error-message {
-            color: red;
-            font-size: 12px;
-            margin-top: 4px;
-        }
+        
            
         </style>
 
@@ -369,6 +389,28 @@
     }
        validateForm()
 
+
+       function resetForm() {
+        var tradeCard = document.getElementById("tradeCard");
+        var output = document.getElementById("output");
+
+        // Reset form fields to initial values
+        document.getElementById("date").value = todayString;
+        document.getElementById("handle").value = "@JustProfit";
+        document.getElementById("symbol").value = "CYBERUSDT";
+        document.querySelector('.tab.active').classList.remove('active');
+        document.querySelector('.tab').classList.add('active');
+        document.getElementById("leverage").value = "20";
+        leverageValueSpan.innerHTML = "20x";
+        document.getElementById("entryPrice").value = "8.2487";
+        document.getElementById("currentPrice").value = "9.2154";
+        document.getElementById("referralCode").value = "1XV1FJV3";
+
+        // Toggle card flip to front side
+        tradeCard.classList.remove("flipped");
+        output.innerHTML = "";
+    }
+
         leverageInput.addEventListener("input", function () {
             leverageValueSpan.innerHTML = leverageInput.value + "x";
         });
@@ -396,8 +438,10 @@
                 const currentPrice = parseFloat(document.getElementById("currentPrice").value);
                 const leverage = parseFloat(document.getElementById("leverage").value);
 
-                const percentageProfit = ((currentPrice - entryPrice) / entryPrice) * 100;
-                const leverageProfit = percentageProfit * leverage;
+                var profitPercentage = ((currentPrice - entryPrice) / entryPrice) * 100 * leverage;
+
+                var formattedProfit = (profitPercentage >= 0 ? '+' : '') + profitPercentage.toFixed(2);
+
 
                 output.innerHTML = `
                 <img src="images/full-bitget-logo.png"
@@ -416,7 +460,7 @@
                             <div style="color: #818181;">|</div>
                             <div id="outputLeverage">${document.getElementById("leverage").value}X</div>
                         </div>
-                        <div id="outputProfit">+${leverageProfit.toFixed(2)}%</div>
+                        <div id="outputProfit">${formattedProfit}%</div>
                         <div class="row entryPriceRow">
                             <div>Entry price</div>
                             <div
@@ -431,7 +475,9 @@
                                     id="outputReferralCode">${document.getElementById("referralCode").value}</span></div>
                             <img src="images/qrcode.png" alt="QR Code"
                                 width="75px">
-                        </div>`;
+                        </div>
+                        <button class="reset-button"
+                            onclick="resetForm()">Reset</button>`;
             } else {
                 output.innerHTML = "";
             }
