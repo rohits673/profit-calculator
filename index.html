@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Trade Information Form</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+            }
+    
+            .container {
+                width: 100%;
+                max-width: 400px;
+                perspective: 1000px;
+            }
+    
+            .card {
+                width: 100%;
+                min-height: 672.5px;
+                position: relative;
+                transform-style: preserve-3d;
+                transition: transform 0.5s;
+            }
+    
+            .card.flipped {
+                transform: rotateY(180deg);
+            }
+    
+            .card-inner {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                transform-style: preserve-3d;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+    
+            .card-front,
+            .card-back {
+                width: 100%;
+                position: absolute;
+                backface-visibility: hidden;
+                display: flex;
+                flex-direction: column;
+                padding: 20px;
+                box-sizing: border-box;
+                background-color: #fff;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                overflow: hidden; /* Prevent content overflow */
+                transition: height 0.5s;
+            }
+    
+            .card-back {
+                color: white;
+                padding: 30px 30px 20px 30px;
+                transform: rotateY(180deg);
+                width: 100%;
+                height: 100%;
+                background: url('images/bg_profit_card.jpeg');
+                background-size:100%;
+                background-repeat: no-repeat;
+            }
+    
+            label {
+                margin-bottom: 8px;
+            }
+    
+            input[type="text"],
+            input[type="number"],
+            select,
+            input[type="date"],
+            input[type="datetime-local"] {
+                width: 100%;
+                padding: 8px;
+                margin-bottom: 16px;
+                box-sizing: border-box;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+    
+            .tab-container {
+                display: flex;
+                margin-bottom: 16px;
+            }
+    
+            .tab {
+                flex: 1;
+                padding: 10px;
+                text-align: center;
+                cursor: pointer;
+                background-color: #ddd;
+            }
+    
+            .tab.active {
+                background-color: #28E6FE;
+                color: #fff;
+            }
+    
+            .slider-container {
+                position: relative;
+                width: 100%;
+            }
+    
+            input[type="range"] {
+                width: 100%;
+                margin-bottom: 5px;
+                -webkit-appearance: none;
+                appearance: none;
+                height: 10px;
+                background: #ddd;
+                outline: none;
+                border-radius: 5px;
+            }
+    
+            input[type="range"]::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                appearance: none;
+                width: 20px;
+                height: 20px;
+                background: #28E6FE;
+                border-radius: 50%;
+                border: 2px solid #fff;
+                cursor: pointer;
+                position: relative;
+                z-index: 1;
+            }
+    
+            .slider-labels {
+                display: flex;
+                justify-content: space-between;
+                color: #555;
+                position: relative;
+                margin-bottom: 20px;
+                z-index: 2;
+            }
+    
+            .trade-info-button {
+                background-color: #28E6FE;
+                color: #fff;
+                padding: 10px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+                z-index: 10000;
+            }
+    
+            .trade-info-button:hover {
+                background-color: #28E6FE;
+            }
+
+            .trade-info-button:disabled {
+                background-color: #818181;
+            }
+    
+            .row {
+                display: flex;
+                flex-direction: row;
+            }
+
+            .column {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .twitterHandle{
+                padding-bottom: 30px;
+            }
+
+            .handleAvatar{
+                height: 48px;
+                width: 48px;
+                background-color: white;
+                border-radius: 100%;
+                margin-right: 15px;
+            }
+
+            
+
+            .position{
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+
+            .entryPriceRow{
+                color: #818181;
+                font-size: 18px;
+                padding-bottom: 16px;
+                /* justify-content: space-between; */
+            }
+
+            .currentPriceRow{
+                color: #818181;
+                font-size: 18px;
+                padding-bottom: 52px;
+                /* justify-content: space-between; */
+            }
+
+            .referralCodeRow{
+                align-items: center;
+                justify-content: space-between;
+                
+            }
+
+            #outputDate{
+                letter-spacing: 1px;
+                color: #818181;
+                font-size: medium;
+                padding: 20px 0px 35px 0px;
+            }
+
+            #outputHandle{
+                letter-spacing: 1px;
+                font-size: 25px;
+                padding-bottom: 5px;
+                
+            }
+
+            #outputHandleSub{
+                color: #818181;
+           }
+
+           #outputSymbol{
+            font-size: 26px;
+           }
+
+           #outputPosition{
+            padding-right: 10px;
+            color: #19A8B5;
+           }
+
+           #outputLeverage{
+            padding-left: 10px;
+            color: #818181;
+           }
+
+           #outputProfit{
+            font-size: 50px;
+            color: #19A8B5;
+            padding-bottom: 20px;
+           }
+
+           #outputEntryPrice{
+            color: white;
+            padding-left: 50px;
+           }
+
+           #outputCurrentPrice{
+            color: white;
+            padding-left: 30px;
+           }
+           .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+           
+        </style>
+
+    </head>
+    <body>
+
+        <div class="container">
+
+            <div class="card" id="tradeCard">
+
+                <div class="card-inner">
+
+                    <div class="card-front">
+                        <label for="date">Date:</label>
+                        <input type="datetime-local" id="date"
+                            oninput="validateForm()" required>
+                        <label for="handle">Twitter Handle:</label>
+                        <input type="text" id="handle" value="@JustProfit"
+                            pattern="[a-zA-Z]+" oninput="validateForm()"
+                            required>
+                        <label for="symbol">Symbol:</label>
+                        <input type="text" id="symbol" value="CYBERUSDT"
+                            pattern="[a-zA-Z]+" oninput="validateForm()"
+                            required>
+
+                        <div class="tab-container">
+                            <div class="tab active"
+                                onclick="setTab('Long')">Long</div>
+                            <div class="tab"
+                                onclick="setTab('Short')">Short</div>
+                        </div>
+
+                        <label for="leverage">Leverage:<span
+                                id="leverageValue">20x</span></label>
+                        <div class="slider-container">
+                            <input type="range" id="leverage" min="1" max="50"
+                                step="1" value="20" oninput="validateForm()"
+                                required>
+                            <div class="slider-labels">
+                                <span>1x</span>
+                                <span>10x</span>
+                                <span>20x</span>
+                                <span>30x</span>
+                                <span>40x</span>
+                                <span>50x</span>
+                            </div>
+                        </div>
+
+                        <label for="entryPrice">Entry Price:</label>
+                        <input type="text" id="entryPrice" value="8.2487"
+                            oninput="validateForm()"
+                            required>
+                        <div class="error-message" id="entryPriceError"></div>
+
+                        <label for="currentPrice">Current Price:</label>
+                        <input type="text" id="currentPrice" value="9.2154"
+                            oninput="validateForm()"
+                            required>
+                        <div class="error-message" id="currentPriceError"></div>
+
+                        <label for="referralCode">Referral Code:</label>
+                        <input type="text" id="referralCode" value="1XV1FJV3"
+                            oninput="validateForm()"
+                            required>
+                        <div class="error-message" id="referralCodeError"></div>
+                        <button type="button" class="trade-info-button"
+                            id="displayTradeBtn" disabled
+                            onclick="toggleTradeInfo()">Display Trade
+                            Information</button>
+                    </div>
+                    <div class="card-back" id="output">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+        var leverageInput = document.getElementById("leverage");
+        var leverageValueSpan = document.getElementById("leverageValue");
+        const today = new Date();
+        const offset = today.getTimezoneOffset(); // Get the timezone offset in minutes
+        const localDateTime = new Date(today.getTime() - offset * 60 * 1000);
+        const todayString = localDateTime.toISOString().slice(0, 16); // Format: "YYYY-MM-DDTHH:mm"
+        document.getElementById("date").value = todayString;
+
+        function validateForm() {
+        const handleInput = document.getElementById("handle");
+        const symbolInput = document.getElementById("symbol");
+        const entryPriceInput = document.getElementById("entryPrice");
+        const currentPriceInput = document.getElementById("currentPrice");
+        const referralCodeInput = document.getElementById("referralCode");
+        const displayTradeBtn = document.getElementById("displayTradeBtn");
+
+        // Empty validation
+        const handleIsEmpty = handleInput.value.trim() === "";
+        const symbolIsEmpty = symbolInput.value.trim() === "";
+        const entryPriceIsEmpty = entryPriceInput.value.trim() === "";
+        const currentPriceIsEmpty = currentPriceInput.value.trim() === "";
+        const referralCodeIsEmpty = referralCodeInput.value.trim() === "";
+
+        // Enable/disable the button based on validation
+        displayTradeBtn.disabled = handleIsEmpty || symbolIsEmpty || entryPriceIsEmpty || currentPriceIsEmpty || referralCodeIsEmpty;
+    }
+       validateForm()
+
+        leverageInput.addEventListener("input", function () {
+            leverageValueSpan.innerHTML = leverageInput.value + "x";
+        });
+
+        function setTab(tabName) {
+            var tabs = document.querySelectorAll('.tab');
+            tabs.forEach(function (tab) {
+                tab.classList.remove('active');
+            });
+
+            var selectedTab = event.target;
+            selectedTab.classList.add('active');
+        }
+
+        function toggleTradeInfo() {
+            var tradeCard = document.getElementById("tradeCard");
+            var output = document.getElementById("output");
+
+            // Toggle card flip
+            tradeCard.classList.toggle("flipped");
+
+            // Display trade information on the back of the card
+            if (tradeCard.classList.contains("flipped")) {
+                const entryPrice = parseFloat(document.getElementById("entryPrice").value);
+                const currentPrice = parseFloat(document.getElementById("currentPrice").value);
+                const leverage = parseFloat(document.getElementById("leverage").value);
+
+                const percentageProfit = ((currentPrice - entryPrice) / entryPrice) * 100;
+                const leverageProfit = percentageProfit * leverage;
+
+                output.innerHTML = `
+                <img src="images/full-bitget-logo.png"
+                            alt="bitget-logo" width="85px">
+                        <div id="outputDate">${document.getElementById("date").value}</div>
+                        <div class="row twitterHandle">
+                            <div class="handleAvatar"></div>
+                            <div class="column">
+                                <div id="outputHandle">${document.getElementById("handle").value}</div>
+                                <div id="outputHandleSub">@JustProfit</div>
+                            </div>
+                        </div>
+                        <div id="outputSymbol">${document.getElementById("symbol").value}</div>
+                        <div class="row position">
+                            <div id="outputPosition">${document.querySelector('.tab.active').innerText}</div>
+                            <div style="color: #818181;">|</div>
+                            <div id="outputLeverage">${document.getElementById("leverage").value}X</div>
+                        </div>
+                        <div id="outputProfit">+${leverageProfit.toFixed(2)}%</div>
+                        <div class="row entryPriceRow">
+                            <div>Entry price</div>
+                            <div
+                                id="outputEntryPrice"> ${document.getElementById("entryPrice").value}</div>
+                        </div>
+                        <div class="row currentPriceRow">
+                            <div>Current price</div>
+                            <div id="outputCurrentPrice">${document.getElementById("currentPrice").value}</div>
+                        </div>
+                        <div class="row referralCodeRow">
+                            <div>Referral Code: <span
+                                    id="outputReferralCode">${document.getElementById("referralCode").value}</span></div>
+                            <img src="images/qrcode.png" alt="QR Code"
+                                width="75px">
+                        </div>`;
+            } else {
+                output.innerHTML = "";
+            }
+        }
+    </script>
+    </body>
+</html>
