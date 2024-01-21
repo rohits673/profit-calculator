@@ -470,6 +470,10 @@
             selectedTab.classList.add('active');
         }
 
+        function padZero(num) {
+            return num < 10 ? `0${num}` : `${num}`;
+        }
+
         function toggleTradeInfo() {
             var tradeCard = document.getElementById("tradeCard");
             var output = document.getElementById("output");
@@ -479,7 +483,12 @@
 
             // Display trade information on the back of the card
             if (tradeCard.classList.contains("flipped")) {
-                document.getElementById("")
+                const inputDateString = new Date(document.getElementById("date").value);
+
+                const formattedDate = `${inputDateString.getFullYear()}/${padZero(inputDateString.getMonth() + 1)}/${padZero(inputDateString.getDate())} ${padZero(inputDateString.getHours())}:${padZero(inputDateString.getMinutes())}`;
+
+
+
 
                 const entryPrice = parseFloat(document.getElementById("entryPrice").value);
                 const currentPrice = parseFloat(document.getElementById("currentPrice").value);
@@ -493,7 +502,7 @@
                 output.innerHTML = `
                 <img src="images/full-bitget-logo.png"
                             alt="bitget-logo" width="80px">
-                        <div id="outputDate">${document.getElementById("date").value}</div>
+                        <div id="outputDate">${formattedDate} (UTC+5)</div>
                         <div class="row twitterHandle">
                             <div id="handleAvatar" style="background:url('${avatarImage}');"></div>
                             <div class="column">
