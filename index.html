@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Trade Information Form</title>
         <style>
+
             body {
                 font-family: Arial, sans-serif;
                 background-color: #f4f4f4;
@@ -13,11 +14,12 @@
                 justify-content: center;
                 align-items: center;
                 min-height: 100vh;
+                font-size: 15px;
             }
     
             .container {
                 width: 100%;
-                max-width: 400px;
+                max-width: 360px;
                 perspective: 1000px;
             }
     
@@ -26,11 +28,12 @@
                 min-height: 672.5px;
                 position: relative;
                 transform-style: preserve-3d;
-                transition: transform 0.5s;
+                transition: transform 0.5s, min-height 0.5s;
             }
     
             .card.flipped {
                 transform: rotateY(180deg);
+                min-height: 600px;
             }
     
             .card-inner {
@@ -61,7 +64,7 @@
     
             .card-back {
                 color: white;
-                padding: 30px 30px 20px 30px;
+                padding: 22px 22px 10px 22px;
                 transform: rotateY(180deg);
                 width: 100%;
                 height: 100%;
@@ -173,36 +176,24 @@
             }
 
             .twitterHandle{
-                padding-bottom: 30px;
+                padding-bottom: 25px;
             }
-
-            .handleAvatar{
-                height: 48px;
-                width: 48px;
-                background-color: white;
-                border-radius: 100%;
-                margin-right: 15px;
-            }
-
-            
 
             .position{
                 padding-top: 20px;
-                padding-bottom: 20px;
+                padding-bottom: 17px;
             }
 
             .entryPriceRow{
                 color: #818181;
-                font-size: 18px;
+                font-size: 16px;
                 padding-bottom: 16px;
-                /* justify-content: space-between; */
             }
 
             .currentPriceRow{
                 color: #818181;
-                font-size: 18px;
-                padding-bottom: 52px;
-                /* justify-content: space-between; */
+                font-size: 16px;
+                padding-bottom: 48px;
             }
 
             .referralCodeRow{
@@ -222,7 +213,7 @@
             border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s;
-            margin-top: 45px;
+            margin-top: 30px;
         }
 
         .reset-button:hover {
@@ -235,16 +226,39 @@
             margin-top: 4px;
         }
 
+        .avatar-input{
+            justify-content: space-between;
+        }
+
+        .handleAvatar{
+                margin-right: 0px !important;
+            }
+
+
+        #handleAvatar, .handleAvatar{
+                height: 42px;
+                width: 42px;
+                background-color: #28E6FE !important;
+                background-position: center !important;
+                background-size: contain !important; 
+                border-radius: 100%;
+                margin-right: 12px;
+            }
+
+        #avatar{
+            margin-bottom: 16px;
+        }
+
             #outputDate{
                 letter-spacing: 1px;
                 color: #818181;
                 font-size: medium;
-                padding: 20px 0px 35px 0px;
+                padding: 12px 0px 35px 0px;
             }
 
             #outputHandle{
                 letter-spacing: 1px;
-                font-size: 25px;
+                font-size: 21px;
                 padding-bottom: 5px;
                 
             }
@@ -254,7 +268,7 @@
            }
 
            #outputSymbol{
-            font-size: 26px;
+            font-size: 23px;
            }
 
            #outputPosition{
@@ -268,9 +282,9 @@
            }
 
            #outputProfit{
-            font-size: 50px;
+            font-size: 47px;
             color: #19A8B5;
-            padding-bottom: 20px;
+            padding-bottom: 16px;
            }
 
            #outputEntryPrice{
@@ -282,8 +296,7 @@
             color: white;
             padding-left: 35px;
            }
-        
-           
+         
         </style>
 
     </head>
@@ -299,8 +312,21 @@
                         <label for="date">Date:</label>
                         <input type="datetime-local" id="date"
                             oninput="validateForm()" required>
-                        <label for="handle">Twitter Handle:</label>
-                        <input type="text" id="handle" value="@JustProfit"
+                        <div class="row avatar-input">
+                            <div class="column">
+                                <label for="avatar">Avatar Image:</label>
+                                <input type="file" id="avatar" accept="image/*"
+                                    onchange="readAvatar(this)" />
+                            </div>
+                            <div class="handleAvatar"></div>
+                        </div>
+
+                        <label for="handle">Channel Title:</label>
+                        <input type="text" id="handle" value="JustProfit"
+                            pattern="[a-zA-Z]+" oninput="validateForm()"
+                            required>
+                        <label for="handle">Channel Subtitle:</label>
+                        <input type="text" id="handleSub" value="@JustProfit"
                             pattern="[a-zA-Z]+" oninput="validateForm()"
                             required>
                         <label for="symbol">Symbol:</label>
@@ -369,8 +395,11 @@
         const todayString = localDateTime.toISOString().slice(0, 16); // Format: "YYYY-MM-DDTHH:mm"
         document.getElementById("date").value = todayString;
 
+        var avatarImage;
+
         function validateForm() {
         const handleInput = document.getElementById("handle");
+        const handleSubInput = document.getElementById("handleSub");
         const symbolInput = document.getElementById("symbol");
         const entryPriceInput = document.getElementById("entryPrice");
         const currentPriceInput = document.getElementById("currentPrice");
@@ -389,6 +418,21 @@
     }
        validateForm()
 
+       function readAvatar(input) {
+
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        avatarImage = URL.createObjectURL(input.files[0]);
+
+        reader.onload = function (e) {
+            document.querySelector(".handleAvatar").style.backgroundImage = `url('${e.target.result}')`;
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
 
        function resetForm() {
         var tradeCard = document.getElementById("tradeCard");
@@ -397,6 +441,7 @@
         // Reset form fields to initial values
         document.getElementById("date").value = todayString;
         document.getElementById("handle").value = "@JustProfit";
+        document.getElementById("handleSub").value = "JustProfit";
         document.getElementById("symbol").value = "CYBERUSDT";
         document.querySelector('.tab.active').classList.remove('active');
         document.querySelector('.tab').classList.add('active');
@@ -434,6 +479,8 @@
 
             // Display trade information on the back of the card
             if (tradeCard.classList.contains("flipped")) {
+                document.getElementById("")
+
                 const entryPrice = parseFloat(document.getElementById("entryPrice").value);
                 const currentPrice = parseFloat(document.getElementById("currentPrice").value);
                 const leverage = parseFloat(document.getElementById("leverage").value);
@@ -445,13 +492,13 @@
 
                 output.innerHTML = `
                 <img src="images/full-bitget-logo.png"
-                            alt="bitget-logo" width="85px">
+                            alt="bitget-logo" width="80px">
                         <div id="outputDate">${document.getElementById("date").value}</div>
                         <div class="row twitterHandle">
-                            <div class="handleAvatar"></div>
+                            <div id="handleAvatar" style="background:url('${avatarImage}');"></div>
                             <div class="column">
                                 <div id="outputHandle">${document.getElementById("handle").value}</div>
-                                <div id="outputHandleSub">@JustProfit</div>
+                                <div id="outputHandleSub">${document.getElementById("handleSub").value}</div>
                             </div>
                         </div>
                         <div id="outputSymbol">${document.getElementById("symbol").value}</div>
