@@ -8,7 +8,7 @@
 
             body {
                 font-family: Arial, sans-serif;
-                background-color: #f4f4f4;
+                background-color: #f1faee;
                 margin: 0;
                 display: flex;
                 justify-content: center;
@@ -19,7 +19,7 @@
     
             .container {
                 width: 100%;
-                max-width: 360px;
+                max-width: 320px;
                 perspective: 1000px;
             }
     
@@ -33,7 +33,7 @@
     
             .card.flipped {
                 transform: rotateY(180deg);
-                min-height: 600px;
+                min-height: 550px;
             }
     
             .card-inner {
@@ -64,11 +64,12 @@
     
             .card-back {
                 color: white;
-                padding: 22px 22px 10px 22px;
+                padding: 20px 20px 10px 20px;
                 transform: rotateY(180deg);
                 width: 100%;
                 height: 100%;
                 background: url('images/bg_profit_card.jpeg');
+                background-color: white;
                 background-size:100%;
                 background-repeat: no-repeat;
             }
@@ -176,27 +177,29 @@
             }
 
             .twitterHandle{
-                padding-bottom: 25px;
+                padding-bottom: 23px;
             }
 
             .position{
-                padding-top: 20px;
-                padding-bottom: 17px;
+                font-size: 14px;
+                padding-top: 14px;
+                padding-bottom: 15px;
             }
 
             .entryPriceRow{
                 color: #818181;
-                font-size: 16px;
-                padding-bottom: 16px;
+                font-size: 14px;
+                padding-bottom: 14px;
             }
 
             .currentPriceRow{
                 color: #818181;
-                font-size: 16px;
-                padding-bottom: 48px;
+                font-size: 14px;
+                padding-bottom: 45px;
             }
 
             .referralCodeRow{
+                font-size: 13px;
                 align-items: center;
                 justify-content: space-between;
                 
@@ -234,41 +237,47 @@
                 margin-right: 0px !important;
             }
 
+            .qr-input{
+                margin-bottom: 16px;
+                align-items: center ;
+            }
 
         #handleAvatar, .handleAvatar{
-                height: 42px;
-                width: 42px;
+                height: 40px;
+                width: 40px;
                 background-color: #28E6FE !important;
                 background-position: center !important;
                 background-size: contain !important; 
                 border-radius: 100%;
-                margin-right: 12px;
+                margin-right: 10px;
             }
 
         #avatar{
+            width: 90%;
             margin-bottom: 16px;
         }
 
             #outputDate{
                 letter-spacing: 1px;
                 color: #818181;
-                font-size: medium;
-                padding: 12px 0px 35px 0px;
+                font-size: 13px;
+                padding: 16px 0px 29px 0px;
             }
 
             #outputHandle{
                 letter-spacing: 1px;
-                font-size: 21px;
-                padding-bottom: 5px;
+                font-size: 20px;
+                padding-bottom: 3px;
                 
             }
 
             #outputHandleSub{
+                font-size: 13px;
                 color: #818181;
            }
 
            #outputSymbol{
-            font-size: 23px;
+            font-size: 22px;
            }
 
            #outputPosition{
@@ -282,9 +291,9 @@
            }
 
            #outputProfit{
-            font-size: 47px;
+            font-size: 42px;
             color: #19A8B5;
-            padding-bottom: 16px;
+            padding-bottom: 14px;
            }
 
            #outputEntryPrice{
@@ -296,6 +305,18 @@
             color: white;
             padding-left: 35px;
            }
+
+           #qrImage{
+            width: 60px;
+            height: 60px;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+           }
+
+           /* #qr{
+            width: 80%;
+           } */
          
         </style>
 
@@ -313,7 +334,7 @@
                         <input type="datetime-local" id="date"
                             oninput="validateForm()" required>
                         <div class="row avatar-input">
-                            <div class="column">
+                            <div class="column" style="width:80%">
                                 <label for="avatar">Avatar Image:</label>
                                 <input type="file" id="avatar" accept="image/*"
                                     onchange="readAvatar(this)" />
@@ -370,9 +391,17 @@
                         <div class="error-message" id="currentPriceError"></div>
 
                         <label for="referralCode">Referral Code:</label>
-                        <input type="text" id="referralCode" value="1XV1FJV3"
+                        <input type="text" id="referralCode"
+                            value="1XV1FJV3"
                             oninput="validateForm()"
                             required>
+
+                        <div class="row qr-input">
+                            <div for="qr">QR:&nbsp</div>
+                            <input type="file" id="qr" accept="image/*"
+                                onchange="readQr(this)" />
+                        </div>
+
                         <div class="error-message" id="referralCodeError"></div>
                         <button type="button" class="trade-info-button"
                             id="displayTradeBtn" disabled
@@ -396,6 +425,7 @@
         document.getElementById("date").value = todayString;
 
         var avatarImage;
+        var qrImage;
 
         function validateForm() {
         const handleInput = document.getElementById("handle");
@@ -424,7 +454,7 @@
         var reader = new FileReader();
 
         avatarImage = URL.createObjectURL(input.files[0]);
-
+        
         reader.onload = function (e) {
             document.querySelector(".handleAvatar").style.backgroundImage = `url('${e.target.result}')`;
         };
@@ -432,6 +462,12 @@
         reader.readAsDataURL(input.files[0]);
     }
 }
+
+       function readQr(input){
+        if (input.files && input.files[0]) {
+            qrImage = URL.createObjectURL(input.files[0]);
+        }
+       }
 
 
        function resetForm() {
@@ -501,7 +537,7 @@
 
                 output.innerHTML = `
                 <img src="images/full-bitget-logo.png"
-                            alt="bitget-logo" width="80px">
+                            alt="bitget-logo" width="70px">
                         <div id="outputDate">${formattedDate} (UTC+5)</div>
                         <div class="row twitterHandle">
                             <div id="handleAvatar" style="background:url('${avatarImage}');"></div>
@@ -529,8 +565,7 @@
                         <div class="row referralCodeRow">
                             <div>Referral Code: <span
                                     id="outputReferralCode">${document.getElementById("referralCode").value}</span></div>
-                            <img src="images/qrcode.png" alt="QR Code"
-                                width="75px">
+                            <img src="${qrImage}" alt="QR Code" id="qrImage">
                         </div>
                         <button class="reset-button"
                             onclick="resetForm()">Reset</button>`;
