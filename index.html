@@ -504,6 +504,9 @@
 
             var selectedTab = event.target;
             selectedTab.classList.add('active');
+            if(tabName == 'short'){
+                selectedTab.style.color = '#AD454A';
+            }
         }
 
         function padZero(num) {
