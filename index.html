@@ -551,7 +551,7 @@
                         </div>
                         <div id="outputSymbol">${document.getElementById("symbol").value}</div>
                         <div class="row position">
-                            <div id="outputPosition">${document.querySelector('.tab.active').innerText}</div>
+                            <div id="outputPosition" style="color:${document.querySelector('.tab.active').innerText == "Short"?"#AD454A":""}">${document.querySelector('.tab.active').innerText}</div>
                             <div style="color: #818181;">|</div>
                             <div id="outputLeverage">${document.getElementById("leverage").value}X</div>
                         </div>
