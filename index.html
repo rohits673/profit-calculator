@@ -102,13 +102,12 @@
                 font-family: monospace;
             }
             .green.small {
-                font-size: 11px;
+                font-size: 13px;
                 background: #17721747;
-                width: 62px;
                 text-align: center;
                 height: 17px;
-                padding: 2px !important;
-                border-radius: 3px;
+                padding: 2px 5px !important;
+                border-radius: 5px;
                 margin: 1px 5px;
            }
            .referral {
@@ -122,10 +121,13 @@
             font-weight: 600;
            }
            .price{
-            padding: 2px !important;
+            padding: 0px 2px !important;
             font-size: 17px;
             font-family: monospace;
             font-weight: bold;
+           }
+           .profitfont{
+            font-size: 35px !important;
            }
             label {
                 margin-bottom: 8px;
@@ -293,6 +295,10 @@
             .qr-input{
                 margin-bottom: 16px;
                 align-items: center ;
+            }
+
+            .gap{
+                height: 40px;
             }
 
         #handleAvatar, .handleAvatar{
@@ -655,14 +661,14 @@
                 }else
                 {
                     output.innerHTML = `<img src="images/bybitLogo.png"
-                            alt="bitget-logo" width="74px">
+                            alt="bitget-logo" width="70px">
                         </div>
                         <div class="symbol" id="outputSymbol">${document.getElementById("symbol").value}
                         <div class="green small" id="outputPosition" style="color:${document.querySelector('.tab.active').innerText == "Short"?"#AD454A":""}">${document.querySelector('.tab.active').innerText} ${Number(document.getElementById("leverage").value).toFixed(1)}X</div>
                         </div>
                         
-                        <div id="ROI">ROI</div>
-                        <div class="green" id="outputProfit">${formattedProfit}%</div>
+                        <div id="ROI">ROI <div class="green profitfont" id="outputProfit">${formattedProfit}%</div></div>
+                        
                         <div class="entryPriceRow" style="padding:2px;" >
                             <div>Entry price</div>
                             <div
@@ -672,6 +678,7 @@
                             <div>Current price</div>
                             <div class="price" id="outputCurrentPrice">${document.getElementById("currentPrice").value}</div>
                         </div>
+                        <div class="gap"></div>
                         <div class="black bybitbottom referralCodeRow">
                             <div><div class="black">Join and claim over $5000 in bonuses!</div>
                                  <span class="referral" id="outputReferralCode">Referral Code:
