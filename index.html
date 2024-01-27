@@ -77,7 +77,7 @@
                 font-weight: bold;
                 font-family: monospace;            }
             .lightblue{
-                color: #28E6FE;
+                color: #19A8B5;
             }
             .white{
                 color: white;
@@ -93,6 +93,9 @@
             .bybit{
                 background-image: url('images/logo.png');
             }    
+            .gray{
+                color: #818181;
+            }
             .black.bybitbottom.referralCodeRow {
                 display: flex;
             }
@@ -111,7 +114,7 @@
                 margin: 1px 5px;
            }
            .referral {
-            font-size: 17px;
+            font-size: 15px;
             font-weight: bolder;
         }
            .symbol{
@@ -254,7 +257,7 @@
             }
 
             .referralCodeRow{
-                font-size: 13px;
+                font-size: 11px;
                 align-items: center;
                 justify-content: space-between;
                 
@@ -639,7 +642,7 @@
                         <div class="row position">
                             <div class="lightblue" id="outputPosition" style="color:${document.querySelector('.tab.active').innerText == "Short"?"#AD454A":""}">${document.querySelector('.tab.active').innerText}</div>
                             <div style="color: #818181;">|</div>
-                            <div class="lightblue" id="outputLeverage">${document.getElementById("leverage").value}X</div>
+                            <div class="gray" id="outputLeverage">${document.getElementById("leverage").value}X</div>
                         </div>
                         <div class="lightblue" id="outputProfit">${formattedProfit}%</div>
                         <div class="row entryPriceRow">
@@ -651,8 +654,7 @@
                             <div>Current price</div>
                             <div id="outputCurrentPrice">${document.getElementById("currentPrice").value}</div>
                         </div>
-                        <div class="row referralCodeRow">
-                            <div>Referral Code: <span
+                        <div class="row referralCodeRow"><div>Referral Code: <span
                                     id="outputReferralCode">${document.getElementById("referralCode").value}</span></div>
                             <img src="${qrImage}" alt="QR Code" id="qrImage">
                         </div>
