@@ -64,16 +64,69 @@
     
             .card-back {
                 color: white;
-                padding: 20px 20px 10px 20px;
+                padding: 20px 20px 20px 20px;
                 transform: rotateY(180deg);
+                justify-content:space-around;;
                 width: 100%;
                 height: 100%;
-                background: url('images/bg_profit_card.jpeg');
-                background-color: white;
                 background-size:100%;
                 background-repeat: no-repeat;
             }
-    
+            .green{
+                color: hsl(137.33deg 35.71% 50.59%);
+                font-weight: bold;
+                font-family: monospace;            }
+            .lightblue{
+                color: #28E6FE;
+            }
+            .white{
+                color: white;
+            }
+            .black{
+                color: black;
+                font-family: monospace;
+            }
+            .bitget{
+                background-image: url('images/bg_profit_card.jpeg');
+                background-color: white;
+            }
+            .bybit{
+                background-image: url('images/logo.png');
+            }    
+            .black.bybitbottom.referralCodeRow {
+                display: flex;
+            }
+            div#ROI {
+                color: #818181;
+                font-size: 14px;
+                font-family: monospace;
+            }
+            .green.small {
+                font-size: 11px;
+                background: #17721747;
+                width: 62px;
+                text-align: center;
+                height: 17px;
+                padding: 2px !important;
+                border-radius: 3px;
+                margin: 1px 5px;
+           }
+           .referral {
+            font-size: 17px;
+            font-weight: bolder;
+        }
+           .symbol{
+            font-size: 22px;
+            display: flex;
+            font-family: monospace;
+            font-weight: 600;
+           }
+           .price{
+            padding: 2px !important;
+            font-size: 17px;
+            font-family: monospace;
+            font-weight: bold;
+           }
             label {
                 margin-bottom: 8px;
             }
@@ -282,17 +335,14 @@
 
            #outputPosition{
             padding-right: 10px;
-            color: #19A8B5;
            }
 
            #outputLeverage{
             padding-left: 10px;
-            color: #818181;
            }
 
            #outputProfit{
             font-size: 42px;
-            color: #19A8B5;
             padding-bottom: 14px;
            }
 
@@ -396,6 +446,14 @@
                             oninput="validateForm()"
                             required>
 
+                        <label for="referralCode">Card type</label>
+                        <select name="card" id="cardtype" oninput="validateForm()"
+                        required>
+                            <option value="bitget">Bitget</option>
+                            <option value="bybit">Bybit</option>
+                          </select>
+                    
+
                         <div class="row qr-input">
                             <div for="qr">QR:&nbsp</div>
                             <input type="file" id="qr" accept="image/*"
@@ -408,7 +466,7 @@
                             onclick="toggleTradeInfo()">Display Trade
                             Information</button>
                     </div>
-                    <div class="card-back" id="output">
+                    <div class="bitget card-back" id="output">
 
                     </div>
                 </div>
@@ -416,6 +474,9 @@
         </div>
 
         <script>
+       
+
+            
         var leverageInput = document.getElementById("leverage");
         var leverageValueSpan = document.getElementById("leverageValue");
         const today = new Date();
@@ -435,6 +496,27 @@
         const currentPriceInput = document.getElementById("currentPrice");
         const referralCodeInput = document.getElementById("referralCode");
         const displayTradeBtn = document.getElementById("displayTradeBtn");
+
+        //bybit input
+        const cardBack=document.getElementById("output");
+        const cardType=document.getElementById("cardtype");    
+        console.log(cardType.value);
+
+
+        if (cardType.value==="bybit") {
+
+            cardBack.classList.add('bybit');
+            cardBack.classList.remove("bitget");
+            //document.getElementById("symbol").value = "SUIUSDT";
+
+        } else if(cardType.value==="bitget"){
+
+            cardBack.classList.add('bitget');
+            cardBack.classList.remove("bybit");
+            //document.getElementById("symbol").value = "CYBERUSDT";
+
+        }
+
 
         // Empty validation
         const handleIsEmpty = handleInput.value.trim() === "";
@@ -478,7 +560,6 @@
         document.getElementById("date").value = todayString;
         document.getElementById("handle").value = "@JustProfit";
         document.getElementById("handleSub").value = "JustProfit";
-        document.getElementById("symbol").value = "CYBERUSDT";
         document.querySelector('.tab.active').classList.remove('active');
         document.querySelector('.tab').classList.add('active');
         document.getElementById("leverage").value = "20";
@@ -533,10 +614,12 @@
                 var profitPercentage = ((currentPrice - entryPrice) / entryPrice) * 100 * leverage;
 
                 var formattedProfit = (profitPercentage >= 0 ? '+' : '') + profitPercentage.toFixed(2);
+                const cardBack=document.getElementById("output");
+                const cardType=document.getElementById("cardtype");
 
 
-                output.innerHTML = `
-                <img src="images/full-bitget-logo.png"
+                if(cardType.value==="bitget"){
+                    output.innerHTML = `<img src="images/full-bitget-logo.png"
                             alt="bitget-logo" width="70px">
                         <div id="outputDate">${formattedDate} (UTC+5)</div>
                         <div class="row twitterHandle">
@@ -548,11 +631,11 @@
                         </div>
                         <div id="outputSymbol">${document.getElementById("symbol").value}</div>
                         <div class="row position">
-                            <div id="outputPosition" style="color:${document.querySelector('.tab.active').innerText == "Short"?"#AD454A":""}">${document.querySelector('.tab.active').innerText}</div>
+                            <div class="lightblue" id="outputPosition" style="color:${document.querySelector('.tab.active').innerText == "Short"?"#AD454A":""}">${document.querySelector('.tab.active').innerText}</div>
                             <div style="color: #818181;">|</div>
-                            <div id="outputLeverage">${document.getElementById("leverage").value}X</div>
+                            <div class="lightblue" id="outputLeverage">${document.getElementById("leverage").value}X</div>
                         </div>
-                        <div id="outputProfit">${formattedProfit}%</div>
+                        <div class="lightblue" id="outputProfit">${formattedProfit}%</div>
                         <div class="row entryPriceRow">
                             <div>Entry price</div>
                             <div
@@ -569,6 +652,37 @@
                         </div>
                         <button class="reset-button"
                             onclick="resetForm()">Reset</button>`;
+                }else
+                {
+                    output.innerHTML = `<img src="images/bybitLogo.png"
+                            alt="bitget-logo" width="74px">
+                        </div>
+                        <div class="symbol" id="outputSymbol">${document.getElementById("symbol").value}
+                        <div class="green small" id="outputPosition" style="color:${document.querySelector('.tab.active').innerText == "Short"?"#AD454A":""}">${document.querySelector('.tab.active').innerText} ${Number(document.getElementById("leverage").value).toFixed(1)}X</div>
+                        </div>
+                        
+                        <div id="ROI">ROI</div>
+                        <div class="green" id="outputProfit">${formattedProfit}%</div>
+                        <div class="entryPriceRow" style="padding:2px;" >
+                            <div>Entry price</div>
+                            <div
+                                class="price" id="outputEntryPrice"> ${document.getElementById("entryPrice").value}</div>
+                        </div>
+                        <div class=" currentPriceRow">
+                            <div>Current price</div>
+                            <div class="price" id="outputCurrentPrice">${document.getElementById("currentPrice").value}</div>
+                        </div>
+                        <div class="black bybitbottom referralCodeRow">
+                            <div><div class="black">Join and claim over $5000 in bonuses!</div>
+                                 <span class="referral" id="outputReferralCode">Referral Code:
+                                    ${document.getElementById("referralCode").value}</span></div>
+                                    <div class="barcode"><img src="${qrImage}" alt="QR Code" id="qrImage"></div>
+                        </div>
+                        <button class="reset-button"
+                            onclick="resetForm()">Reset</button>`
+                }
+
+                
             } else {
                 output.innerHTML = "";
             }
