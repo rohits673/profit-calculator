@@ -66,14 +66,13 @@
                 color: white;
                 padding: 20px 20px 20px 20px;
                 transform: rotateY(180deg);
-                justify-content:space-around;;
                 width: 100%;
                 height: 100%;
                 background-size:100%;
                 background-repeat: no-repeat;
             }
             .green{
-                color: hsl(137.33deg 35.71% 50.59%);
+                color: #1db36c;
                 font-weight: bold;
                 font-family: monospace;            }
             .lightblue{
@@ -94,43 +93,59 @@
                 background-image: url('images/logo.png');
             }    
             .gray{
-                color: #818181;
+                color: #c4c6c8;
             }
             .black.bybitbottom.referralCodeRow {
                 display: flex;
+                margin: 22px 0px 0px 0px;
             }
             div#ROI {
-                color: #818181;
-                font-size: 14px;
+                font-size: 13px;
                 font-family: monospace;
             }
             .green.small {
-                font-size: 13px;
+                font-size: 12px;
                 background: #17721747;
                 text-align: center;
-                height: 17px;
-                padding: 2px 5px !important;
+                padding: 2px 4px !important;
                 border-radius: 5px;
                 margin: 1px 5px;
-           }
+            }
            .referral {
-            font-size: 15px;
+            font-size: 18px;
             font-weight: bolder;
+            letter-spacing: 0px;
+            word-spacing: -6px;
         }
            .symbol{
-            font-size: 22px;
+            font-size: 21px;
             display: flex;
+            align-items: center;
+            padding: 0px 0px 15px 0px;
             font-family: monospace;
             font-weight: 600;
            }
            .price{
-            padding: 0px 2px !important;
+            padding: 0px 0px 7px 0px !important;
             font-size: 17px;
             font-family: monospace;
             font-weight: bold;
            }
            .profitfont{
             font-size: 35px !important;
+            padding: 0px 0px 20px 0px !important;
+           }
+           .bybitPricelabel{
+            font-size: 11px !important;
+           }
+           .bybitQR{
+            width: 48px !important;
+            height: 48px !important;
+            border: 7px solid white;
+            border-radius: 8px;
+           }
+           .bybitCardPadding{
+            padding: 15px 15px 15px 15px;
            }
             label {
                 margin-bottom: 8px;
@@ -221,7 +236,7 @@
             }
 
             .trade-info-button:disabled {
-                background-color: #818181;
+                background-color: #c4c6c8;
             }
     
             .row {
@@ -245,19 +260,19 @@
             }
 
             .entryPriceRow{
-                color: #818181;
+                color: #c4c6c8;
                 font-size: 14px;
                 padding-bottom: 14px;
             }
 
             .currentPriceRow{
-                color: #818181;
+                color: #c4c6c8;
                 font-size: 14px;
                 padding-bottom: 42px;
             }
 
             .referralCodeRow{
-                font-size: 13px;
+                font-size: 12px;
                 align-items: center;
                 justify-content: space-between;
                 
@@ -301,7 +316,7 @@
             }
 
             .gap{
-                height: 40px;
+                height: 34px;
             }
 
         #handleAvatar, .handleAvatar{
@@ -321,7 +336,7 @@
 
             #outputDate{
                 letter-spacing: 1px;
-                color: #818181;
+                color: #c4c6c8;
                 font-size: 13px;
                 padding: 16px 0px 29px 0px;
             }
@@ -335,7 +350,7 @@
 
             #outputHandleSub{
                 font-size: 13px;
-                color: #818181;
+                color: #c4c6c8;
            }
 
            #outputSymbol{
@@ -410,7 +425,7 @@
                             pattern="[a-zA-Z]+" oninput="validateForm()"
                             required>
                         <label for="symbol">Symbol:</label>
-                        <input type="text" id="symbol" value="CYBERUSDT"
+                        <input type="text" id="symbol" value="SUIUSDT"
                             pattern="[a-zA-Z]+" oninput="validateForm()"
                             required>
 
@@ -475,7 +490,7 @@
                             onclick="toggleTradeInfo()">Display Trade
                             Information</button>
                     </div>
-                    <div class="bitget card-back" id="output">
+                    <div class="bitget  card-back" id="output">
 
                     </div>
                 </div>
@@ -516,12 +531,14 @@
 
             cardBack.classList.add('bybit');
             cardBack.classList.remove("bitget");
+            cardBack.classList.add("bybitCardPadding");
             //document.getElementById("symbol").value = "SUIUSDT";
 
         } else if(cardType.value==="bitget"){
 
             cardBack.classList.add('bitget');
             cardBack.classList.remove("bybit");
+            cardBack.classList.remove("bybitCardPadding");
             //document.getElementById("symbol").value = "CYBERUSDT";
 
         }
@@ -646,15 +663,15 @@
                         </div>
                         <div class="lightblue" id="outputProfit">${formattedProfit}%</div>
                         <div class="row entryPriceRow">
-                            <div>Entry price</div>
+                            <div>Entry Price</div>
                             <div
                                 id="outputEntryPrice"> ${document.getElementById("entryPrice").value}</div>
                         </div>
                         <div class="row currentPriceRow">
-                            <div>Current price</div>
+                            <div>Current Price</div>
                             <div id="outputCurrentPrice">${document.getElementById("currentPrice").value}</div>
                         </div>
-                        <div class="row referralCodeRow"><div>Referral Code: <span
+                        <div class="row referralCodeRow" ><div>Referral Code: <span
                                     id="outputReferralCode">${document.getElementById("referralCode").value}</span></div>
                             <img src="${qrImage}" alt="QR Code" id="qrImage">
                         </div>
@@ -663,21 +680,22 @@
                 }else
                 {
                     output.innerHTML = `<img src="images/bybitLogo.png"
-                            alt="bitget-logo" width="70px">
+                            alt="bitget-logo" width="55px">
+                            <div class="gap"></div>
                         </div>
                         <div class="symbol" id="outputSymbol">${document.getElementById("symbol").value}
                         <div class="green small" id="outputPosition" style="color:${document.querySelector('.tab.active').innerText == "Short"?"#AD454A":""}">${document.querySelector('.tab.active').innerText} ${Number(document.getElementById("leverage").value).toFixed(1)}X</div>
                         </div>
                         
-                        <div id="ROI">ROI <div class="green profitfont" id="outputProfit">${formattedProfit}%</div></div>
+                        <div class="gray" id="ROI">ROI <div class="green profitfont" id="outputProfit">${formattedProfit}%</div></div>
                         
-                        <div class="entryPriceRow" style="padding:2px;" >
-                            <div>Entry price</div>
+                        <div class="bybitPricelabel entryPriceRow" style="padding:2px;" >
+                            <div>Entry Price</div>
                             <div
                                 class="price" id="outputEntryPrice"> ${document.getElementById("entryPrice").value}</div>
                         </div>
-                        <div class=" currentPriceRow">
-                            <div>Current price</div>
+                        <div class="bybitPricelabel currentPriceRow">
+                            <div>Current Price</div>
                             <div class="price" id="outputCurrentPrice">${document.getElementById("currentPrice").value}</div>
                         </div>
                         <div class="gap"></div>
@@ -685,7 +703,7 @@
                             <div><div class="black">Join and claim over $5000 in bonuses!</div>
                                  <span class="referral" id="outputReferralCode">Referral Code:
                                     ${document.getElementById("referralCode").value}</span></div>
-                                    <div class="barcode"><img src="${qrImage}" alt="QR Code" id="qrImage"></div>
+                                    <div class="bybitqr"><img src="${qrImage}" alt="QR Code" class="bybitQR" id="qrImage"></div>
                         </div>
                         <button class="reset-button"
                             onclick="resetForm()">Reset</button>`
