@@ -97,19 +97,22 @@
             }
             .black.bybitbottom.referralCodeRow {
                 display: flex;
-                margin: 22px 0px 0px 0px;
+                margin: 0px 0px 0px 0px;
             }
             div#ROI {
-                font-size: 13px;
+                font-size: 11px;
                 font-family: monospace;
             }
             .green.small {
-                font-size: 12px;
+                font-size: 10px;
                 background: #17721747;
                 text-align: center;
-                padding: 2px 4px !important;
+                padding: 2px 6px !important;
                 border-radius: 5px;
                 margin: 1px 5px;
+            }
+            .red {
+                background: #3b2223 !important;
             }
            .referral {
             font-size: 16px;
@@ -118,22 +121,22 @@
             word-spacing: -6px;
         }
            .symbol{
-            font-size: 21px;
+            font-size: 18px !important;
             display: flex;
             align-items: center;
-            padding: 0px 0px 15px 0px;
+            padding: 0px 0px 18px 0px;
             font-family: monospace;
             font-weight: 600;
            }
            .price{
-            padding: 0px 0px 7px 0px !important;
-            font-size: 17px;
+            padding: 4px 0px 10px 0px !important;
+            font-size: 14px;
             font-family: monospace;
             font-weight: bold;
            }
            .profitfont{
-            font-size: 35px !important;
-            padding: 0px 0px 20px 0px !important;
+            font-size: 32px !important;
+            padding: 8px 0px 20px 0px !important;
            }
            .bybitPricelabel{
             font-size: 11px !important;
@@ -141,8 +144,6 @@
            .bybitQR{
             width: 48px !important;
             height: 48px !important;
-            border: 7px solid white;
-            border-radius: 8px;
            }
            .bybitCardPadding{
             padding: 15px 15px 15px 15px;
@@ -215,7 +216,6 @@
                 display: flex;
                 justify-content: space-between;
                 color: #555;
-                position: relative;
                 margin-bottom: 20px;
                 z-index: 2;
             }
@@ -272,10 +272,16 @@
             }
 
             .referralCodeRow{
-                font-size: 12px;
+                font-size: 11px;
+            }
+
+            .flex-evenly{
+                justify-content: space-evenly;
+            }
+            
+            .align-center{
                 align-items: center;
                 justify-content: space-between;
-                
             }
 
 
@@ -316,7 +322,7 @@
             }
 
             .gap{
-                height: 34px;
+                height: 45px;
             }
 
         #handleAvatar, .handleAvatar{
@@ -471,12 +477,12 @@
                             required>
 
                         <label for="referralCode">Card type</label>
-                        <select name="card" id="cardtype" oninput="validateForm()"
-                        required>
+                        <select name="card" id="cardtype"
+                            oninput="validateForm()"
+                            required>
                             <option value="bitget">Bitget</option>
                             <option value="bybit">Bybit</option>
-                          </select>
-                    
+                        </select>
 
                         <div class="row qr-input">
                             <div for="qr">QR:&nbsp</div>
@@ -608,9 +614,9 @@
             tabs.forEach(function (tab) {
                 tab.classList.remove('active');
             });
-
             var selectedTab = event.target;
             selectedTab.classList.add('active');
+            
         }
 
         function padZero(num) {
@@ -671,7 +677,7 @@
                             <div>Current Price</div>
                             <div id="outputCurrentPrice">${document.getElementById("currentPrice").value}</div>
                         </div>
-                        <div class="row referralCodeRow" ><div>Referral Code: <span
+                        <div class="row referralCodeRow align-center" ><div>Referral Code: <span
                                     id="outputReferralCode">${document.getElementById("referralCode").value}</span></div>
                             <img src="${qrImage}" alt="QR Code" id="qrImage">
                         </div>
@@ -679,12 +685,12 @@
                             onclick="resetForm()">Reset</button>`;
                 }else
                 {
-                    output.innerHTML = `<img src="images/bybitLogo.png"
+                    output.innerHTML = `<img src="images/bybit_logo.png"
                             alt="bitget-logo" width="55px">
                             <div class="gap"></div>
                         </div>
                         <div class="symbol" id="outputSymbol">${document.getElementById("symbol").value}
-                        <div class="green small" id="outputPosition" style="color:${document.querySelector('.tab.active').innerText == "Short"?"#AD454A":""}">${document.querySelector('.tab.active').innerText} ${Number(document.getElementById("leverage").value).toFixed(1)}X</div>
+                        <div class="green small ${document.querySelector('.tab.active').innerText == "Short"?"red":""}" id="outputPosition" style="color:${document.querySelector('.tab.active').innerText == "Short"?"#AD454A":""}">${document.querySelector('.tab.active').innerText} ${Number(document.getElementById("leverage").value).toFixed(1)}X</div>
                         </div>
                         
                         <div class="gray" id="ROI">ROI <div class="green profitfont" id="outputProfit">${formattedProfit}%</div></div>
@@ -700,10 +706,13 @@
                         </div>
                         <div class="gap"></div>
                         <div class="black bybitbottom referralCodeRow">
-                            <div><div class="black">Join and claim over $5000 in bonuses!</div>
-                                 <span class="referral" id="outputReferralCode">Referral Code:
-                                    ${document.getElementById("referralCode").value}</span></div>
-                                    <div class="bybitqr"><img src="${qrImage}" alt="QR Code" class="bybitQR" id="qrImage"></div>
+                            <div class = "column flex-evenly">
+                                <div class="black">Join and claim over $5000 in bonuses!</div>
+                                <div class="referral" id="outputReferralCode">Referral Code:
+                                    ${document.getElementById("referralCode").value}
+                                 </div>
+                            </div>
+                                <img src="${qrImage}" alt="QR Code" id="qrImage">
                         </div>
                         <button class="reset-button"
                             onclick="resetForm()">Reset</button>`
