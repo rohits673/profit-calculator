@@ -642,7 +642,7 @@
 
                 var profitPercentage = ((currentPrice - entryPrice) / entryPrice) * 100 * leverage;
 
-                var formattedProfit = (profitPercentage >= 0 ? '+' : '') + profitPercentage.toFixed(2);
+                var formattedProfit =  '+'  + Math.abs(profitPercentage).toFixed(2);
                 const cardBack=document.getElementById("output");
                 const cardType=document.getElementById("cardtype");
 
