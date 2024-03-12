@@ -1,5 +1,5 @@
             body {
-                font-family: Arial, sans-serif;
+                font-family: "Arimo", sans-serif;
                 background-color: #f1faee;
                 margin: 0;
                 display: flex;
@@ -436,7 +436,7 @@
             }
 
             .binance-profit {
-                font-weight: bolder;
+                font-weight: 500;
                 font-size: 28px;
                 padding-bottom: 5px;
             }
