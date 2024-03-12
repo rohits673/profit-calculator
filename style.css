@@ -436,6 +436,7 @@
             }
 
             .binance-profit {
+                font-weight: bold;
                 font-size: 28px;
                 padding-bottom: 5px;
             }
