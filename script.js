@@ -179,46 +179,38 @@ function toggleTradeInfo() {
                 <div class="row twitterHandle">
                     <div id="handleAvatar" style="background:url('${avatarImage}');"></div>
                     <div class="column">
-                        <div id="outputHandle">${
-                          document.getElementById("handle").value
-                        }</div>
-                        <div id="outputHandleSub">${
-                          document.getElementById("handleSub").value
-                        }</div>
+                        <div id="outputHandle">${document.getElementById("handle").value
+        }</div>
+                        <div id="outputHandleSub">${document.getElementById("handleSub").value
+        }</div>
                     </div>
                 </div>
-                <div id="outputSymbol" class="outputSymbol">${
-                  document.getElementById("symbol").value
-                }</div>
+                <div id="outputSymbol" class="outputSymbol">${document.getElementById("symbol").value
+        }</div>
                 <div class="row position">
-                    <div class="lightblue outputPosition" id="outputPosition" style="color:${
-                      document.querySelector(".tab.active").innerText == "Short"
-                        ? "#AD454A"
-                        : ""
-                    }">${document.querySelector(".tab.active").innerText}</div>
+                    <div class="lightblue outputPosition" id="outputPosition" style="color:${document.querySelector(".tab.active").innerText == "Short"
+          ? "#AD454A"
+          : ""
+        }">${document.querySelector(".tab.active").innerText}</div>
                     <div style="color: #818181;"><span class="">|</span></div>
-                    <div class="gray outputLeverage" id="outputLeverage">${
-                      document.getElementById("leverage").value
-                    }X</div>
+                    <div class="gray outputLeverage" id="outputLeverage">${document.getElementById("leverage").value
+        }X</div>
                 </div>
                 <div class="lightblue outputProfit" id="outputProfit">${formattedProfit}%</div>
                 <div class="row entryPriceRow">
                     <div>Entry Price</div>
                     <div
-                        id="outputEntryPrice"> ${
-                          document.getElementById("entryPrice").value
-                        }</div>
+                        id="outputEntryPrice"> ${document.getElementById("entryPrice").value
+        }</div>
                 </div>
                 <div class="row currentPriceRow">
                     <div>Current Price</div>
-                    <div id="outputCurrentPrice">${
-                      document.getElementById("currentPrice").value
-                    }</div>
+                    <div id="outputCurrentPrice">${document.getElementById("currentPrice").value
+        }</div>
                 </div>
                 <div class="row referralCodeRow align-center" ><div>Referral Code: <span
-                            id="outputReferralCode">${
-                              document.getElementById("referralCode").value
-                            }</span></div>
+                            id="outputReferralCode">${document.getElementById("referralCode").value
+        }</span></div>
                     <img src="${qrImage}" alt="QR Code" id="qrImage" class="qrImage">
                 </div>
                 <button class="reset-button"
@@ -228,20 +220,17 @@ function toggleTradeInfo() {
                     alt="bitget-logo" width="55px">
                     <div class="gap"></div>
                 </div>
-                <div class="symbol outputSymbol" id="outputSymbol">${
-                  document.getElementById("symbol").value
-                }
-                <div class="green small outputPosition ${
-                  document.querySelector(".tab.active").innerText == "Short"
-                    ? "red"
-                    : ""
-                }" id="outputPosition" style="color:${
-        document.querySelector(".tab.active").innerText == "Short"
+                <div class="symbol outputSymbol" id="outputSymbol">${document.getElementById("symbol").value
+        }
+                <div class="green small outputPosition ${document.querySelector(".tab.active").innerText == "Short"
+          ? "red"
+          : ""
+        }" id="outputPosition" style="color:${document.querySelector(".tab.active").innerText == "Short"
           ? "#AD454A"
           : ""
-      }">${document.querySelector(".tab.active").innerText} ${Number(
-        document.getElementById("leverage").value
-      ).toFixed(1)}X</div>
+        }">${document.querySelector(".tab.active").innerText} ${Number(
+          document.getElementById("leverage").value
+        ).toFixed(1)}X</div>
                 </div>
                 
                 <div class="gray" id="ROI">ROI <div class="green profitfont outputProfit" id="outputProfit">${formattedProfit}%</div></div>
@@ -249,15 +238,13 @@ function toggleTradeInfo() {
                 <div class="bybitPricelabel entryPriceRow" style="padding:0px;" >
                     <div>Entry Price</div>
                     <div
-                        class="price" id="outputEntryPrice"> ${
-                          document.getElementById("entryPrice").value
-                        }</div>
+                        class="price" id="outputEntryPrice"> ${document.getElementById("entryPrice").value
+        }</div>
                 </div>
                 <div class="bybitPricelabel currentPriceRow">
                     <div>Current Price</div>
-                    <div class="price" id="outputCurrentPrice">${
-                      document.getElementById("currentPrice").value
-                    }</div>
+                    <div class="price" id="outputCurrentPrice">${document.getElementById("currentPrice").value
+        }</div>
                 </div>
                 <div class="gap"></div>
                 <div class="black bybitbottom referralCodeRow">
@@ -277,41 +264,35 @@ function toggleTradeInfo() {
 
                <div class="binance-second-half">
                 <div class="binance row position">
-                    <div class="binance-green" id="outputPosition" style="color:${
-                      document.querySelector(".tab.active").innerText == "Short"
-                        ? "#AD454A"
-                        : ""
-                    }">${document.querySelector(".tab.active").innerText}</div>
+                    <div class="binance-green" id="outputPosition" style="color:${document.querySelector(".tab.active").innerText == "Short"
+          ? "#AD454A"
+          : ""
+        }">${document.querySelector(".tab.active").innerText}</div>
                     <div><span class="gray binance-padding">|</span></div>
-                    <div id="outputLeverage" class="binance-padding-left" >${
-                      document.getElementById("leverage").value
-                    }x </div> <span class="gray binance-padding">|</span>
-                    <div id="outputSymbol" class="binance-symbol">${
-                      document.getElementById("symbol").value
-                    }</div>
+                    <div id="outputLeverage" class="binance-padding-left" >${document.getElementById("leverage").value
+        }x </div> <span class="gray binance-padding">|</span>
+                    <div id="outputSymbol" class="binance-symbol">${document.getElementById("symbol").value
+        }</div>
 
                 </div>
                 <div class="binance-green binance-profit" id="outputProfit">${formattedProfit}%</div>
                 <div class="row binance entryPriceRow">
-                    <div>Entry Price</div>
+                    <div class="binance-gray">Entry Price</div>
                     <div class="binance-color"
-                        id="outputEntryPrice"> ${
-                          document.getElementById("entryPrice").value
-                        }</div>
+                        id="outputEntryPrice"> ${document.getElementById("entryPrice").value
+        }</div>
                 </div>
                 <div class="row binance currentPriceRow">
-                    <div class="binance-space">Last Price</div>
-                    <div id="outputCurrentPrice" class="binance-color">${
-                      document.getElementById("currentPrice").value
-                    }</div>
+                    <div class="binance-space binance-gray">Last Price</div>
+                    <div id="outputCurrentPrice" class="binance-color">${document.getElementById("currentPrice").value
+        }</div>
                 </div>
                 <div class="row referralCodeRow binance-align-center" >
                     <img src="${qrImage}" alt="QR Code" id="qrImage" class="binance qrImage">
                     <div class="binance-container">
-                    <div class="gray binance-referral-code">Referral Code </div>
-                    <div id="outputReferralCode" class="binance-code">${
-                      document.getElementById("referralCode").value
-                    }</div>
+                    <div class="binance-gray binance-referral-code">Referral Code </div>
+                    <div id="outputReferralCode" class="binance-code">${document.getElementById("referralCode").value
+        }</div>
                     <div class="binance-color binance-referral-code">Get the Binance App</div>
                     </div>
                     </div>
