@@ -110,12 +110,12 @@
                 background: #17721747;
                 text-align: center;
                 padding: 2px 6px !important;
-                border-radius: 5px;
+                border-radius: 3px;
                 margin: 1px 5px;
             }
 
             .red {
-                background: #3b2223 !important;
+                background: rgb(59 34 22 / 50%) !important;
             }
 
             .referral {
