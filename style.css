@@ -28,6 +28,10 @@
                 min-height: 550px;
             }
 
+            .card.flipped.video-mode {
+                min-height: 460px;
+            }
+
             .card-inner {
                 width: 100%;
                 height: 100%;
@@ -57,12 +61,17 @@
 
             .card-back {
                 color: white;
-                padding: 20px 20px 20px 20px;
                 transform: rotateY(180deg);
                 width: 100%;
                 height: 100%;
                 background-size: 100%;
                 background-repeat: no-repeat;
+                scale: 1.8;
+                overflow: visible;
+            }
+
+            .padding20 {
+                padding: 20px 20px 0px 25px;
             }
 
             .green {
@@ -268,6 +277,10 @@
                 padding-bottom: 15px;
             }
 
+            #background {
+                margin-bottom: 16px;
+            }
+
             .entryPriceRow {
                 color: #c4c6c8;
                 font-size: 14px;
@@ -388,7 +401,7 @@
 
             #outputEntryPrice {
                 color: white;
-                padding-left: 50px;
+                padding-left: 35px;
             }
 
             #outputCurrentPrice {
@@ -412,6 +425,10 @@
             .binance-bg-rocket {
                 background-image: url(images/binance/binance_bg_1.jpg);
                 height: 60% !important;
+            }
+
+            .binance-footer {
+                background-image: url(images/binance/binance_footer.jpg);
             }
 
             .binance-bg-circle {
@@ -457,6 +474,10 @@
                 color: #FDBA0C !important;
             }
 
+            .binance-container {
+                align-self: center;
+            }
+
             img.binance.qrImage {
                 width: 30px;
                 height: 30px;
@@ -498,3 +519,70 @@
                 width: 3px;
                 height: 50px;
             }
+
+            .videoMode {
+                margin-bottom: 10px;
+            }
+
+            .videoModeContent {
+                display: none;
+                background-color: #28E6FE;
+                padding: 10px;
+                margin-bottom: 10px;
+                border-radius: 5px;
+            }
+
+            .time-stamp {
+                font-size: 6px;
+                text-align: right;
+                opacity: 0.5;
+                padding: 0px 6px 3px 6px;
+            }
+
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                display: none;
+                z-index: 999;
+            }
+
+            /* Floating button styles */
+            .floating-button {
+                height: 18px;
+                width: 18px;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                /* padding: 5px 15px; */
+                font-size: 8px;
+                background-color: white;
+                color: grey;
+                border: none;
+                border-radius: 50%;
+                cursor: pointer;
+                z-index: 2;
+                /* Ensure they stay above other content */
+            }
+
+            /* Position left button */
+            .left-button {
+                left: -30px;
+                opacity: 0.5;
+                /* Adjust distance from card as needed */
+            }
+
+            /* Position right button */
+            .right-button {
+                right: -30px;
+                /* Adjust distance from card as needed */
+            }
+
+            /* 
+            #leftButton,
+            #rightButton {
+                display: none;
+            } */

@@ -81,6 +81,27 @@ function validateForm() {
 }
 validateForm();
 
+
+function toggleVideoMode() {
+  const videoModeContent = document.querySelector(".videoModeContent");
+  const videoModeToggle = document.getElementById("videoModeToggle");
+
+  videoModeContent.style.display = videoModeToggle.checked ? "block" : "none";
+}
+
+let backgroundImageURL = "";
+
+function setBodyBackground(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      backgroundImageURL = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
 function readAvatar(input) {
   if (input.files && input.files[0]) {
     var reader = new FileReader();
@@ -141,15 +162,39 @@ function padZero(num) {
   return num < 10 ? `0${num}` : `${num}`;
 }
 
+let intervalId;
+
 function toggleTradeInfo() {
   var tradeCard = document.getElementById("tradeCard");
   var output = document.getElementById("output");
 
   // Toggle card flip
   tradeCard.classList.toggle("flipped");
+  const cardInner = document.getElementsByClassName("card-inner")[0];
+
+
+  const variationInput = document.getElementById("variation");
+  const variationValue = parseFloat(variationInput.value) || 0;
+
+  const timeStamp = document.getElementById("timestamp").value;
 
   // Display trade information on the back of the card
   if (tradeCard.classList.contains("flipped")) {
+    const isVideoMode = videoModeToggle.checked;
+
+    if (isVideoMode) {
+      tradeCard.classList.add("video-mode");
+    } else {
+      tradeCard.classList.remove("video-mode");
+    }
+
+    cardInner.style.justifyContent = isVideoMode ? "center" : "flex-start";
+    document.body.style.background = isVideoMode ? `url(${backgroundImageURL})  rgba(0, 0, 0, 0.5)` : "";
+    document.body.style.backgroundBlendMode = "multiply";
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundRepeat = "no-repeat";
+    document.body.style.backgroundPosition = "center";
+
     const inputDateString = new Date(document.getElementById("date").value);
 
     const formattedDate = `${inputDateString.getFullYear()}/${padZero(
@@ -159,13 +204,36 @@ function toggleTradeInfo() {
     )}:${padZero(inputDateString.getMinutes())}`;
 
     const entryPrice = parseFloat(document.getElementById("entryPrice").value);
-    const currentPrice = parseFloat(
-      document.getElementById("currentPrice").value
-    );
+    const currentPrice = parseFloat(document.getElementById("currentPrice").value);
     const leverage = parseFloat(document.getElementById("leverage").value);
 
-    var profitPercentage =
-      ((currentPrice - entryPrice) / entryPrice) * 100 * leverage;
+    let fluctuatedCurrentPrice = currentPrice;
+    let profitPercentage = 0;
+
+    if (isVideoMode) {
+      output.style.scale = 1.8;
+      if (intervalId) clearInterval(intervalId);
+      intervalId = setInterval(() => {
+        const randomFluctuationROI = (Math.random() * variationValue * 2) - variationValue;
+        fluctuatedCurrentPrice += (currentPrice * (randomFluctuationROI / 100));
+        if (!isNaN(fluctuatedCurrentPrice) && !isNaN(entryPrice) && !isNaN(leverage)) {
+          profitPercentage = ((fluctuatedCurrentPrice - entryPrice) / entryPrice) * 100 * leverage;
+        } else {
+          profitPercentage = 0;
+        }
+
+        const decimalPlaces = getDecimalPlaces(currentPrice);
+        var formattedFluctuatedCurrentPrice = fluctuatedCurrentPrice.toFixed(decimalPlaces);
+        var formattedProfit = "+" + Math.abs(profitPercentage).toFixed(2) + "%";
+
+        document.getElementById("outputProfit").textContent = formattedProfit;
+        document.getElementById("outputCurrentPrice").textContent = formattedFluctuatedCurrentPrice;
+
+      }, 1000);
+    } else {
+      output.style.scale = 1;
+      profitPercentage = ((currentPrice - entryPrice) / entryPrice) * 100 * leverage;
+    }
 
     var formattedProfit = "+" + Math.abs(profitPercentage).toFixed(2);
     const cardType = document.getElementById("cardtype");
@@ -205,8 +273,7 @@ function toggleTradeInfo() {
                 </div>
                 <div class="row currentPriceRow">
                     <div>Current Price</div>
-                    <div id="outputCurrentPrice">${document.getElementById("currentPrice").value
-        }</div>
+                    <div id="outputCurrentPrice">${fluctuatedCurrentPrice}</div>
                 </div>
                 <div class="row referralCodeRow align-center" ><div>Referral Code: <span
                             id="outputReferralCode">${document.getElementById("referralCode").value
@@ -259,11 +326,13 @@ function toggleTradeInfo() {
                 <button class="reset-button"
                     onclick="resetForm()">Reset</button>`;
     } else if (cardType.value === "binance") {
-      output.innerHTML = `<img src="images/binance/bin_logo.png"
+      output.style.padding = "0px";
+
+      output.innerHTML = `<div class="padding20"><img src="images/binance/bin_logo.png"
                     alt="binance-logo" class="binance-logo">
 
-               <div class="binance-second-half">
-                <div class="binance row position">
+               <div class="${isVideoMode ? '' : 'binance-second-half'}">
+                <div class="binance row position" style="${isVideoMode ? 'padding-left:0px;' : ''}">
                     <div class="binance-green" id="outputPosition" style="color:${document.querySelector(".tab.active").innerText == "Short"
           ? "#AD454A"
           : ""
@@ -277,14 +346,14 @@ function toggleTradeInfo() {
                 </div>
                 <div class="binance-green binance-profit" id="outputProfit">${formattedProfit}%</div>
                 <div class="row binance entryPriceRow">
-                    <div class="binance-gray">Entry Price</div>
+                    <div class="binance-space binance-gray" >Entry Price</div>
                     <div class="binance-color"
-                        id="outputEntryPrice"> ${document.getElementById("entryPrice").value
+                        id="outputEntryPrice" style="${isVideoMode ? 'padding-left:0px' : ''}"> ${document.getElementById("entryPrice").value
         }</div>
                 </div>
                 <div class="row binance currentPriceRow">
-                    <div class="binance-space binance-gray">Last Price</div>
-                    <div id="outputCurrentPrice" class="binance-color">${document.getElementById("currentPrice").value
+                    <div class="binance-space binance-gray" >${isVideoMode ? 'Mark Price' : 'Last Price'}</div>
+                    <div id="outputCurrentPrice" class="binance-color" style="${isVideoMode ? 'padding-left:0px' : ''}">${document.getElementById("currentPrice").value
         }</div>
                 </div>
                 <div class="row referralCodeRow binance-align-center" >
@@ -293,19 +362,32 @@ function toggleTradeInfo() {
                     <div class="binance-gray binance-referral-code">Referral Code </div>
                     <div id="outputReferralCode" class="binance-code">${document.getElementById("referralCode").value
         }</div>
-                    <div class="binance-color binance-referral-code">Get the Binance App</div>
+                    <div class="binance-color binance-referral-code" style="${isVideoMode ? 'display:none;' : ''}" >Get the Binance App</div>
                     </div>
                     </div>
-
                 </div>
-                <button class="reset-button"
-                    onclick="resetForm()">Reset</button>`;
+                </div>
+                 <div class="time-stamp">Time Stamp : ${timeStamp}</div>
+                ${isVideoMode ? '<img src="images/binance/binance_footer.png">' : '<button class="reset-button" style="margin:20px" onclick="resetForm()">Reset</button>'}
+                ${isVideoMode ? '<button id="leftButton" class="floating-button left-button"><div style="rotate:180deg;">&#10132;</div></button> <button id="rightButton" class="floating-button right-button"><span>&#10132;</span></button>' : ''}
+                    `;
     } else {
       output.innerHTML = `<div>not valid choice</div>`;
     }
   } else {
+    cardInner.style.justifyContent = "space-between";
+    document.body.style.backgroundImage = "";
     output.innerHTML = "";
   }
 
   window.scrollTo(0, 0);
+}
+
+
+function getDecimalPlaces(num) {
+  const numStr = num.toString();
+  if (numStr.includes('.')) {
+    return numStr.split('.')[1].length;
+  }
+  return 0;
 }

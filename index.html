@@ -8,7 +8,7 @@
 
     </head>
     <body>
-
+        <div class="overlay" id="overlay"></div>
         <div class="container">
 
             <div class="card" id="tradeCard">
@@ -16,6 +16,26 @@
                 <div class="card-inner">
 
                     <div class="card-front">
+                        <div class="videoMode">
+                            <label for="videoModeToggle">Enable Video Mode:</label>
+                            <input type="checkbox" id="videoModeToggle" onchange="toggleVideoMode()">
+                        </div>
+                        <div class="videoModeContent">
+                        <div class="row avatar-input">
+                            <div class="column" style="width:80%">
+                                <label for="background">Background Image:</label>
+                                <input type="file" id="background" accept="image/*"
+                                    onchange="setBodyBackground(event)" />
+                            </div>
+                        </div>
+
+                        <label for="variation">Variation (%):</label>
+                        <input type="number" id="variation" value="0" min="0" />
+
+                        <label for="timestamp">Time Stamp:</label>
+                        <input type="text" id="timestamp" value="2024-10-05 21:43" />
+                        </div>
+
                         <label for="date">Date:</label>
                         <input type="datetime-local" id="date"
                             oninput="validateForm()" required>
@@ -104,8 +124,9 @@
                             Information</button>
                     </div>
                     <div class="card-back" id="output">
-
+                        
                     </div>
+                   
                 </div>
             </div>
         </div>
