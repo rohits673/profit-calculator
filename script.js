@@ -367,7 +367,7 @@ function toggleTradeInfo() {
                     </div>
                 </div>
                 </div>
-                ${isVideoMode ? <div class="time-stamp">Time Stamp : ${timeStamp}</div> : ''}
+                ${isVideoMode ? `<div class="time-stamp">Time Stamp : ${timeStamp}</div>` : ''}
                 ${isVideoMode ? '<img src="images/binance/binance_footer.png">' : '<button class="reset-button" style="margin:20px" onclick="resetForm()">Reset</button>'}
                 ${isVideoMode ? '<button id="leftButton" class="floating-button left-button"><div style="rotate:180deg;">&#10132;</div></button> <button id="rightButton" class="floating-button right-button"><span>&#10132;</span></button>' : ''}
                     `;
