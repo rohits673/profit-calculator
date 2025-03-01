@@ -294,7 +294,9 @@
             }
 
             .currentPriceRow-bitget{
-                padding-bottom: 60px !important;
+                color: #c4c6c8;
+                font-size: 14px;
+                padding-bottom: 60px;
             }
 
             .referralCodeRow {
@@ -411,7 +413,7 @@
 
             #outputEntryPrice {
                 color: white;
-                padding-left: 55px;
+                padding-left: 49px;
             }
 
             #outputCurrentPrice {
