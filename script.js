@@ -20,6 +20,7 @@ function cardBackBackGround(profit) {
     bitget: ["bitget"],
     binance1: ["binance-bg-rocket"],
     binance2: ["binance-bg-circle"],
+    binance3: ["binance-bg-rockit"],
   };
 
   // Function to update card classes based on the selected card type
@@ -29,7 +30,8 @@ function cardBackBackGround(profit) {
       ...cardClasses["bybit"],
       ...cardClasses["bitget"],
       ...cardClasses["binance1"],
-      ...cardClasses["binance2"]
+      ...cardClasses["binance2"],
+      ...cardClasses["binance3"],
     );
 
     // Add classes based on the selected card type
@@ -39,13 +41,17 @@ function cardBackBackGround(profit) {
   // Accessing individual elements of the 'binance' array
   const binanceFirstElement = "binance1"; // Updated key
   const binanceSecondElement = "binance2"; // Updated key
+  const binanceThirdElement = "binance3"; // Updated key
 
   // Checking the card type and profit condition
   if (cardType.value === "binance") {
     if (profit >= 100) {
       // If profit is greater than or equal to 100, use the first element of the 'binance' array
       updateCardClasses(binanceSecondElement);
-    } else {
+    } else if (profit > 50 && profit < 100) {
+      updateCardClasses(binanceThirdElement);
+    }
+    else {
       // Otherwise, use the second element of the 'binance' array
       updateCardClasses(binanceFirstElement);
     }
@@ -128,17 +134,22 @@ function resetForm() {
   var tradeCard = document.getElementById("tradeCard");
   var output = document.getElementById("output");
 
+  const cardInner = document.getElementsByClassName("card-inner")[0];
+  cardInner.style.justifyContent = "flex-start";
+
+  document.body.style.background = "";
+
   // Reset form fields to initial values
-  document.getElementById("date").value = todayString;
-  document.getElementById("handle").value = "@JustProfit";
-  document.getElementById("handleSub").value = "JustProfit";
-  document.querySelector(".tab.active").classList.remove("active");
-  document.querySelector(".tab").classList.add("active");
-  document.getElementById("leverage").value = "20";
-  leverageValueSpan.innerHTML = "20x";
-  document.getElementById("entryPrice").value = "8.2487";
-  document.getElementById("currentPrice").value = "9.2154";
-  document.getElementById("referralCode").value = "1XV1FJV3";
+  // document.getElementById("date").value = todayString;
+  // document.getElementById("handle").value = "@JustProfit";
+  // document.getElementById("handleSub").value = "JustProfit";
+  // document.querySelector(".tab.active").classList.remove("active");
+  // document.querySelector(".tab").classList.add("active");
+  // document.getElementById("leverage").value = "20";
+  // leverageValueSpan.innerHTML = "20x";
+  // document.getElementById("entryPrice").value = "8.2487";
+  // document.getElementById("currentPrice").value = "9.2154";
+  // document.getElementById("referralCode").value = "1XV1FJV3";
 
   // Toggle card flip to front side
   tradeCard.classList.remove("flipped");
@@ -271,60 +282,81 @@ function toggleTradeInfo() {
                         id="outputEntryPrice"> ${document.getElementById("entryPrice").value
         }</div>
                 </div>
-                <div class="row currentPriceRow">
+                <div class="row currentPriceRow-bitget">
                     <div>Current Price</div>
                     <div id="outputCurrentPrice">${fluctuatedCurrentPrice}</div>
                 </div>
-                <div class="row referralCodeRow align-center" ><div>Referral Code: <span
+                <div class="referralCodeRow-bitget align-center" style="color:black;" ><div style="margin-bottom:5px;">Referral Code: <span
                             id="outputReferralCode">${document.getElementById("referralCode").value
         }</span></div>
-                    <img src="${qrImage}" alt="QR Code" id="qrImage" class="qrImage">
-                </div>
-                <button class="reset-button"
-                    onclick="resetForm()">Reset</button>`;
+        <div>Scan the QR code and sign up on Bitget to get <span class="lightblue"> 6200 USDT</span> instantly.</div></div>
+                <button class="reset-button" style="margin-top:40px"
+                    onclick="resetForm()">Reset</button>
+                    <button id="captureScreenshotBtn" class="reset-button">Capture Screenshot</button>
+`;
     } else if (cardType.value === "bybit") {
-      output.innerHTML = `<img src="images/bybit_logo.png"
-                    alt="bitget-logo" width="55px">
-                    <div class="gap"></div>
-                </div>
-                <div class="symbol outputSymbol" id="outputSymbol">${document.getElementById("symbol").value
-        }
-                <div class="green small outputPosition ${document.querySelector(".tab.active").innerText == "Short"
-          ? "red"
-          : ""
-        }" id="outputPosition" style="color:${document.querySelector(".tab.active").innerText == "Short"
-          ? "#AD454A"
-          : ""
-        }">${document.querySelector(".tab.active").innerText} ${Number(
-          document.getElementById("leverage").value
-        ).toFixed(1)}X</div>
-                </div>
-                
-                <div class="gray" id="ROI">ROI <div class="green profitfont outputProfit" id="outputProfit">${formattedProfit}%</div></div>
-                
-                <div class="bybitPricelabel entryPriceRow" style="padding:0px;" >
-                    <div>Entry Price</div>
-                    <div
-                        class="price" id="outputEntryPrice"> ${document.getElementById("entryPrice").value
-        }</div>
-                </div>
-                <div class="bybitPricelabel currentPriceRow">
-                    <div>Current Price</div>
-                    <div class="price" id="outputCurrentPrice">${document.getElementById("currentPrice").value
-        }</div>
-                </div>
-                <div class="gap"></div>
-                <div class="black bybitbottom referralCodeRow">
-                    <div class = "column flex-evenly">
-                        <div class="black">Join and claim over $5000 in bonuses!</div>
-                        <div class="referral" id="outputReferralCode">Referral Code:
-                            ${document.getElementById("referralCode").value}
-                         </div>
-                    </div>
-                        <img src="${qrImage}" alt="QR Code" id="qrImage" class="qrImage">
-                </div>
-                <button class="reset-button"
-                    onclick="resetForm()">Reset</button>`;
+      output.innerHTML = `<!-- Main Content -->
+<div class="main-container">
+    <img src="images/bybit_logo.png" alt="bitget-logo" width="55px">
+
+    <div class="gap"></div>
+
+    <div class="symbol outputSymbol" id="outputSymbol">
+        ${document.getElementById("symbol").value}
+        
+        <div class="green small outputPosition 
+            ${document.querySelector(".tab.active").innerText == "Short" ? "red" : ""}" 
+            id="outputPosition" 
+            style="color: ${document.querySelector(".tab.active").innerText == "Short" ? "#AD454A" : ""};">
+            ${document.querySelector(".tab.active").innerText} 
+            ${Number(document.getElementById("leverage").value).toFixed(1)}X
+        </div>
+    </div>
+
+    <div class="gray" id="ROI">
+        ROI 
+        <div class="green profitfont outputProfit" id="outputProfit">
+            ${formattedProfit}%
+        </div>
+    </div>
+
+    <div class="bybitPricelabel entryPriceRow" style="padding: 0px;">
+        <div>Entry Price</div>
+        <div class="price" id="outputEntryPrice">
+            ${document.getElementById("entryPrice").value}
+        </div>
+    </div>
+
+    <div class="bybitPricelabel currentPriceRow">
+        <div>Current Price</div>
+        <div class="price" id="outputCurrentPrice">
+            ${document.getElementById("currentPrice").value}
+        </div>
+    </div>
+
+    <div class="gap"></div>
+
+    <div class="black bybitbottom referralCodeRow">
+        <div class="column flex-evenly">
+            <div class="black">
+                Join and claim over $5000 in bonuses!
+            </div>
+            <div class="referral" id="outputReferralCode">
+                Referral Code: ${document.getElementById("referralCode").value}
+            </div>
+        </div>
+        <img src="${qrImage}" alt="QR Code" id="qrImage" class="qrImage">
+    </div>
+
+    <!-- Reset Button inside the main container -->
+    <button class="reset-button" onclick="resetForm()">Reset</button>
+</div>
+
+<!-- Capture Screenshot Button placed outside -->
+<div class="screenshot-container">
+    <button id="captureScreenshotBtn" class="reset-button">Capture Screenshot</button>
+</div>
+`;
     } else if (cardType.value === "binance") {
       output.style.padding = "0px";
 
@@ -368,12 +400,50 @@ function toggleTradeInfo() {
                 </div>
                 </div>
                 ${isVideoMode ? `<div class="time-stamp">Time Stamp : ${timeStamp}</div>` : ''}
-                ${isVideoMode ? '<img src="images/binance/binance_footer.png">' : '<button class="reset-button" style="margin:20px" onclick="resetForm()">Reset</button>'}
-                ${isVideoMode ? '<button id="leftButton" class="floating-button left-button"><div style="rotate:180deg;">&#10132;</div></button> <button id="rightButton" class="floating-button right-button"><span>&#10132;</span></button>' : ''}
+                ${isVideoMode ? '<img src="images/binance/binance_footer.png">' : '<button class="reset-button" style="margin:20px" onclick="resetForm()">Reset</button><button id="captureScreenshotBtn" style="margin:20px" class="reset-button">Capture Screenshot</button>'}
+                ${isVideoMode ? '<button onclick="resetForm()" id="leftButton" class="floating-button left-button"><div style="rotate:180deg;">&#10132;</div></button> <button id="rightButton" class="floating-button right-button"><span>&#10132;</span></button>' : ''}
                     `;
     } else {
       output.innerHTML = `<div>not valid choice</div>`;
     }
+
+    document.getElementById("captureScreenshotBtn").addEventListener("click", function () {
+      const cardElement = document.getElementById("output");
+  
+      const scale = 3; // Increase for higher resolution
+      const originalTransform = cardElement.style.transform; // Store original styles
+  
+      // Remove mirroring before capture
+      cardElement.style.transform = "none";
+  
+      domtoimage.toPng(cardElement, {
+          width: cardElement.offsetWidth * scale,
+          height: cardElement.offsetHeight * scale,
+          style: {
+              transform: "scale(" + scale + ")",
+              transformOrigin: "top left",
+              width: cardElement.offsetWidth + "px",
+              height: cardElement.offsetHeight + "px"
+          }
+      }).then(function (dataUrl) {
+          // Restore original mirroring after capture
+          cardElement.style.transform = originalTransform;
+  
+          // Download image
+          const link = document.createElement("a");
+          link.href = dataUrl;
+          link.download = "card_screenshot.png";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+      }).catch(function (error) {
+          console.error("Error capturing high-resolution screenshot:", error);
+          cardElement.style.transform = originalTransform; // Restore mirroring in case of error
+      });
+  });
+  
+  
+  
   } else {
     cardInner.style.justifyContent = "space-between";
     document.body.style.backgroundImage = "";
@@ -391,3 +461,4 @@ function getDecimalPlaces(num) {
   }
   return 0;
 }
+

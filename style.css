@@ -93,7 +93,7 @@
             }
 
             .bitget {
-                background-image: url('images/bg_profit_card.jpeg');
+                background-image: url('images/bitget_bg.png');
                 background-color: white;
             }
 
@@ -293,8 +293,17 @@
                 padding-bottom: 42px;
             }
 
+            .currentPriceRow-bitget{
+                padding-bottom: 60px !important;
+            }
+
             .referralCodeRow {
                 font-size: 11px;
+            }
+
+            .referralCodeRow-bitget{
+                font-size: 12px;
+                width: 80%;
             }
 
             .flex-evenly {
@@ -318,6 +327,7 @@
                 cursor: pointer;
                 transition: background-color 0.3s;
                 margin-top: 50px;
+                width: 100%
             }
 
             .reset-button:hover {
@@ -344,7 +354,7 @@
             }
 
             .gap {
-                height: 45px;
+                height: 41px;
             }
 
             #handleAvatar,
@@ -395,13 +405,13 @@
             }
 
             .outputProfit {
-                font-size: 42px;
+                font-size: 36px;
                 padding-bottom: 14px;
             }
 
             #outputEntryPrice {
                 color: white;
-                padding-left: 31px;
+                padding-left: 55px;
             }
 
             #outputCurrentPrice {
@@ -433,6 +443,11 @@
 
             .binance-bg-circle {
                 background-image: url(images/binance/binance_bg_2.jpg);
+                height: 60% !important;
+            }
+
+            .binance-bg-rockit {
+                background-image: url(images/binance/binance_bg_3.png);
                 height: 60% !important;
             }
 
@@ -468,6 +483,10 @@
                 color: #7A7D85;
                 font-size: 9px;
                 padding-bottom: 13px;
+            }
+
+            .row.binance #outputEntryPrice {
+                padding-left: 31px;
             }
 
             .binance-color {
